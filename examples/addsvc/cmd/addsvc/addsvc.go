@@ -70,7 +70,7 @@ func main() {
 		if *zipkinURL != "" {
 			var (
 				err         error
-				hostPort    = "localhost:80"
+				hostPort    = "localhost:80" // 当前server程序部署后的host和端口
 				serviceName = "addsvc"
 				reporter    = zipkinhttp.NewReporter(*zipkinURL)
 			)
@@ -91,10 +91,10 @@ func main() {
 	// components that use it, as a dependency.
 	var tracer stdopentracing.Tracer
 	{
-		if *zipkinBridge && zipkinTracer != nil {
+		if *zipkinBridge && zipkinTracer != nil { // 开启了桥接, 同时zipkin已经初始化好了
 			logger.Log("tracer", "Zipkin", "type", "OpenTracing", "URL", *zipkinURL)
-			tracer = zipkinot.Wrap(zipkinTracer)
-			zipkinTracer = nil // do not instrument with both native tracer and opentracing bridge
+			tracer = zipkinot.Wrap(zipkinTracer) // 桥接后转换为了opentracer , 这样就可以使用opentracer的调用方法来调用了
+			zipkinTracer = nil                   // do not instrument with both native tracer and opentracing bridge
 		} else if *lightstepToken != "" {
 			logger.Log("tracer", "LightStep") // probably don't want to print out the token :)
 			tracer = lightstep.NewTracer(lightstep.Options{

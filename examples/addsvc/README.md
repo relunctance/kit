@@ -15,3 +15,17 @@ If you don't _know_ you need to use one in your organization, it's probably best
 avoided: prefer moving that logic to consumers, and relying on 
  [contract testing](https://docs.pact.io/best_practices/contract_tests_not_functional_tests.html)
 to detect incompatibilities.
+
+# 说明
+
+* 这个示例中包含了
+   * 限流
+   * 熔断
+   * 链路追踪zipkin  
+   * 链路追踪opentrace ( 不考虑)
+   * debug调试模式
+   * http协议方式
+   * grpc协议方式 
+   * thrift协议方式
+   * 目录结构划分
+
